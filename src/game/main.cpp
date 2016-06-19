@@ -1,9 +1,11 @@
 #include <iostream>
-#include "test.cpp"
+#include "bag.h"
 
 int main(int argc, char const *argv[]) {
 
-	func();
+	Tea::Bag bag;
+
+	bag.run();
 
 	return 0;
 }
