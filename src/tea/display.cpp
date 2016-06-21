@@ -42,9 +42,6 @@ namespace Tea {
 					Bag::stop();
 				}
 			}
-			if (e.type == SDL_KEYDOWN) {
-				Bag::stop();
-			}
 		}
 	}
 
