@@ -6,14 +6,27 @@
 namespace Tea {
 
 	enum InputState {
-		PRESSED,
-		RELEASED,
-		UP,
-		DOWN
+		KEY_RELEASED = -2,
+		KEY_UP = 0,
+		KEY_DOWN = 1,
+		KEY_PRESSED = 2
+	};
+
+	enum class InputType {
+		KEY_DOWN,
+		KEY_UP,
+		MOUSE_MOVE,
+		MOUSE_CLICK,
+		MOUSE_RELEASE,
+		BUTTON_DOWN,
+		BUTTON_UP,
+		CONTROLLER_ADD,
+		CONTROLLER_REMOVE
 	};
 
 	struct Input {
 
+		Input(int dev, int b, int m): device(dev), button(b), axis(0), mods(m) {};
 		Input(int dev, int b, int a, int m): device(dev), button(b), axis(a), mods(m) {};
 
 		Input(const std::string& data) {
