@@ -1,8 +1,7 @@
 #include "inputmanager.h"
 #include "bag.h"
+#include "loader.h"
 
-
-#include <fstream>
 #include <iostream>
 
 namespace Tea {
@@ -33,11 +32,10 @@ namespace Tea {
 
 	bool InputManager::readInputMap(const std::string& path) {
 		_path = path;
-		std::ifstream file(path);
+		std::fstream file = Loader::openFile(_path);
 		std::string line;
 
 		if (file.fail()) {
-			std::cerr << "Error loading file \"" << path << "\"" << std::endl;
 			return false;
 		}
 
@@ -49,7 +47,7 @@ namespace Tea {
 	}
 
 	bool InputManager::writeInputMap(const std::string& path) {
-		std::ofstream file;
+		std::fstream file;
 		std::string line;
 
 		//Check if a path is given in, otherwise use the default
@@ -57,10 +55,9 @@ namespace Tea {
 			_path = path;
 		}
 
-		file.open(_path);
+		file = Loader::openFile(_path);
 
 		if (file.fail()) {
-			std::cerr << "Error loading file \"" << path << "\"" << std::endl;
 			return false;
 		}
 

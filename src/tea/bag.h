@@ -1,9 +1,17 @@
 #pragma once
 
+#ifdef _DEBUG
+#define IS_DEBUG 
+#endif
+
 #include <vector>
 
 #include "include.h"
 #include "display.h"
+
+#include "inputmanager.h"
+#include "graphicscomponent.h"
+#include "loader.h"
 
 namespace Tea {
 	class Bag {
@@ -20,7 +28,7 @@ namespace Tea {
 
 		static void cleanUp();
 
-		static void addUpdateCall(void(*function)(float));
+		static void registerUpdateFunction(void(*function)(float));
 
 	private:
 

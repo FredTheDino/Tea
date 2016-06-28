@@ -8,20 +8,36 @@ namespace Tea {
 
 	Bag::Bag() {
 		init();
+
+		InputManager::readInputMap();
+
+		GraphicsComponent::init();
+
+		registerUpdateFunction(GraphicsComponent::drawEverything);
 	}
 
 	Bag::~Bag() {
 		cleanUp();
+		InputManager::writeInputMap();
+
+		GraphicsComponent::destroy();
 	}
 
 	void Bag::init() {
-		SDL_Init(SDL_INIT_EVERYTHING);
 		_display = new Display();
 	}
 
 	void Bag::run() {
-		while(_running)
+		while (_running) {
 			_display->update();
+			InputManager::update();
+
+			for (size_t i = _functions.size(); 0 < i; i--)
+				_functions[i - 1](0.0f);
+
+			if (InputManager::hasInputState("quit", InputState::KEY_RELEASED))
+				stop();
+		}
 	}
 
 	void Bag::stop() {
@@ -32,9 +48,8 @@ namespace Tea {
 		SDL_Quit();
 	}
 
-	void Bag::addUpdateCall(void(*function)(float))  {
+	void Bag::registerUpdateFunction(void(*function)(float))  {
 		_functions;
 		_functions.push_back(function);
 	}
-
 }

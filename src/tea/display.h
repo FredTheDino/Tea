@@ -17,8 +17,10 @@ namespace Tea {
 
 		std::string name = "Display";
 
-		size_t width = 400;
+		size_t width = 500;
 		size_t height = 500;
+	
+		bool vsync = 0;
 	};
 
 	class Display {
@@ -28,6 +30,8 @@ namespace Tea {
 
 		void reset();
 		void update();
+
+		void checkError(int line);
 
 		std::string getWindowName() { return _info.name; }
 		void setWindowName(std::string windowName) { _info.name = windowName; }
@@ -40,6 +44,9 @@ namespace Tea {
 
 		size_t getDisplayType() { return _info.type; }
 		void setDisplayType(unsigned char displayType) { _info.type = displayType; }
+
+		bool getVSync() { return _info.vsync; }
+		void setVSync(bool vsync) { _info.vsync = vsync; }
 
 	private:
 		SDL_Window* _window;

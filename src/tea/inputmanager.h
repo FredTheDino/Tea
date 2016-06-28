@@ -6,7 +6,7 @@
 #include <vector>
 #include <iostream>
 
-//#include "glm\glm.hpp"
+#include "glm\glm.hpp"
 #include "include.h"
 #include "input.h"
 //Included bellow
@@ -27,6 +27,8 @@ namespace Tea {
 		static float getInput(const std::string& name) { return _inputData[name]; }
 		static std::string getName(const std::string& key) { return _inputMap[key]; }
 
+		static bool hasInputState(const std::string& name, InputState state) { return getInput(name) == state; }
+
 		static void addInput(unsigned int device, unsigned int button, unsigned int mods, unsigned int axis, const std::string& name);
 		static void addInput(Input data, const std::string& name = 0);
 
@@ -43,7 +45,7 @@ namespace Tea {
 		//Each raw input has a translation into a input name.
 		//<device:axis:button:mods> <name>
 		static std::unordered_map<std::string, std::string> _inputMap;
-		//Each input name is linked to a float.
+		//Each input name is linked to a float. (To support axies on controllers via the same interface)
 		//<name> <value>
 		static std::unordered_map<std::string, float> _inputData;
 

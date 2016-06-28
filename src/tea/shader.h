@@ -1,0 +1,29 @@
+#pragma once
+#include <string>
+#include <vector>
+
+#include "include.h"
+#include "loader.h"
+
+namespace Tea {
+	
+	enum ShaderTypes {
+		VERTEX_SHADER = 1,
+		FRAGMENT_SHADER = 2,
+		TESSELATION_SHADER = 4,
+		GEOMETRY_SHADER = 8
+	};
+	
+	class Shader {
+	public:
+		Shader(const std::string& path, unsigned int shaderTypes = 3);
+		~Shader();
+
+		void bind();
+
+	private:
+
+		std::vector<GLuint> _shaders;
+		GLuint _program;
+	};
+}

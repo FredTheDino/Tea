@@ -2,8 +2,8 @@
 
 #ifdef _WIN64
 
-#include "include/glew.h"
 #include "include/SDL.h"
+#include "include/glew.h"
 #include <GL/gl.h>
 
 #elif _WIN32
