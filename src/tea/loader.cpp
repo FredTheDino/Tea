@@ -10,6 +10,10 @@ namespace Tea {
 		std::fstream file = openFile(path);
 		std::string line;
 		
+		if (!file.is_open()) {
+			std::cout << "HERLM," << std::endl;
+		}
+
 		std::string output = "";
 		while (std::getline(file, line)) {
 			output += line;
@@ -27,8 +31,9 @@ namespace Tea {
 			//If you can't find the first file, look in the directories over this one til we find it. 
 			//(If you build this in the build directory, it should just allways work.)
 			if (!looping && !works) {
-				
 				looping = true;
+				std::string oldPath = fsPath;
+
 				for (size_t i = 0; i < 5; i++) {
 					fsPath = "../" + fsPath;
 					std::cout << "fsPath: " << fsPath << std::endl;
@@ -37,9 +42,11 @@ namespace Tea {
 					if (file.is_open()) {
 						works = true;
 						looping = false;
-						break;
+						return file;
 					}
 				}
+				fsPath = oldPath;
+				looping = false;
 			}
 		}
 		return file;

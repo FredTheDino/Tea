@@ -2,13 +2,14 @@
 
 #include "component.h"
 #include "vertex.h"
+#include "material.h"
 
 #include <vector>
 
 namespace Tea {
 	class GraphicsComponent : public Component {
 	public:
-		GraphicsComponent(GameObject* parent);
+		GraphicsComponent(GameObject* parent, Material* material);
 		~GraphicsComponent();
 
 		static void init();
@@ -18,7 +19,7 @@ namespace Tea {
 		static void destroy();
 
 	private:
-		//Material _material;
+		Material* _material;
 
 		static bool _setUp;
 		static GLuint _vertexBufferObject;

@@ -10,7 +10,9 @@ int main(int argc, const char* argv[]) {
 
 	
 	Tea::GameObject obj;
-	Tea::GraphicsComponent com(&obj);
+	Tea::Shader sh("shader");
+	Tea::Material mat(&sh);
+	Tea::GraphicsComponent com(&obj, &mat);
 	obj.addComponent<Tea::GraphicsComponent>(&com);
 	
 

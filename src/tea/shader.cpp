@@ -9,19 +9,19 @@ namespace Tea {
 		GLint status;
 		if (isProgram)
 			glGetShaderiv(target, check, &status);
-		
+
 		else
 			glGetProgramiv(target, check, &status);
-		
+
 		if (status != GL_TRUE) {
-		
+
 			char buffer[512];
 			if (isProgram)
 				glGetProgramInfoLog(target, 512, NULL, buffer);
-			
+
 			else
 				glGetShaderInfoLog(target, 512, NULL, buffer);
-			
+
 			std::cout << "A shader error occured: " << buffer << std::endl;
 		}
 	}
@@ -29,20 +29,21 @@ namespace Tea {
 	static GLuint makeShader(const std::string& path, GLenum shaderType) {
 		GLuint shader = glCreateShader(shaderType);
 
-		const char* source = Loader::readTextFile(path + ".vs").c_str();
-		
+		std::string middleMan = Loader::readTextFile(path);
+		const char* source = middleMan.c_str();
+
 		glShaderSource(shader, 1, &source, NULL);
 		glCompileShader(shader);
 
 		checkError(shader, GL_COMPILE_STATUS);
-		
+
 		return shader;
 	}
 
 	Shader::Shader(const std::string& path, unsigned int shaderTypes) {
-		
+
 		_program = glCreateProgram();
-		
+
 		if (shaderTypes & ShaderTypes::VERTEX_SHADER) {
 			_shaders.push_back(
 				makeShader(path + ".vs", GL_VERTEX_SHADER)
@@ -50,7 +51,7 @@ namespace Tea {
 		}
 		if (shaderTypes & ShaderTypes::FRAGMENT_SHADER) {
 			_shaders.push_back(
-				makeShader(path + ".vs", GL_FRAGMENT_SHADER)
+				makeShader(path + ".fs", GL_FRAGMENT_SHADER)
 				);
 		}
 		if (shaderTypes & ShaderTypes::TESSELATION_SHADER) {
@@ -80,5 +81,9 @@ namespace Tea {
 		}
 
 		glDeleteProgram(_program);
+	}
+
+	void Shader::bind() {
+		glUseProgram(_program);
 	}
 }

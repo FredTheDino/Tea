@@ -13,7 +13,7 @@ namespace Tea {
 	std::vector<Vertex> GraphicsComponent::_vertices;
 	std::vector<GraphicsComponent*> GraphicsComponent::_componentList;
 
-	GraphicsComponent::GraphicsComponent(GameObject* parent): Component(parent) {
+	GraphicsComponent::GraphicsComponent(GameObject* parent, Material* material): Component(parent), _material(material) {
 		_componentList.push_back(this);
 
 		init();
@@ -32,9 +32,13 @@ namespace Tea {
 		if (_setUp) { return; }
 		_setUp = true;
 			
-		_vertices.push_back(Vertex( 0.0f,  0.5f, 0.0));
+		_vertices.push_back(Vertex(-0.5f,  0.5f, 0.0));
 		_vertices.push_back(Vertex(-0.5f, -0.5f, 0.0));
 		_vertices.push_back(Vertex( 0.5f, -0.5f, 0.0));
+
+		_vertices.push_back(Vertex( 0.5f,  0.5f, 0.0));
+		_vertices.push_back(Vertex( 0.5f, -0.5f, 0.0));
+		_vertices.push_back(Vertex(-0.5f,  0.5f, 0.0));
 
 		glGenVertexArrays(1, &_vertexArrayObject);
 		glBindVertexArray(_vertexArrayObject);
@@ -45,54 +49,94 @@ namespace Tea {
 			glEnableVertexAttribArray(0);
 			glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, 0);
 		}
-		glBindVertexArray(0);
+		/*
+		DEBUG PART
+		THIS NEEDS TO GO SOME TIME IN THE FUTURE!
+		*/
+		/*
+		std::string vertexShaderSource = "#version 150 \n in vec3 position; void main() { gl_Position = vec4(position, 0.5); }";
+		std::string fragmentShaderSource = "#version 150 \n out vec4 outColor; void main() { outColor = vec4(1.0, 0.0, 1.0, 1.0); }";
 
+		auto vSource = vertexShaderSource.c_str();
+		auto fSource = fragmentShaderSource.c_str();
+
+		_vertexShader = glCreateShader(GL_VERTEX_SHADER);
+		_fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
+
+		glShaderSource(_vertexShader, 1, &vSource, NULL);
+		glShaderSource(_fragmentShader, 1, &fSource, NULL);
+
+		glCompileShader(_vertexShader);
+		{
+			GLint status;
+			glGetShaderiv(_vertexShader, GL_COMPILE_STATUS, &status);
+			if (status != GL_TRUE) {
+				char buffer[521];
+				glGetShaderInfoLog(_vertexShader, 512, NULL, buffer);
+				std::cout << buffer << std::endl;
+			}
+		}
+
+		glCompileShader(_fragmentShader);
+		{
+			GLint status;
+			glGetShaderiv(_fragmentShader, GL_COMPILE_STATUS, &status);
+			if (status != GL_TRUE) {
+				char buffer[521];
+				glGetShaderInfoLog(_fragmentShader, 512, NULL, buffer);
+				std::cout << buffer << std::endl;
+			}
+		}
+
+		_program = glCreateProgram();
+		glAttachShader(_program, _vertexShader);
+		glAttachShader(_program, _fragmentShader);
+
+		glLinkProgram(_program);
+		{
+			GLint status;
+			glGetProgramiv(_program, GL_LINK_STATUS, &status);
+			if (status != GL_TRUE) {
+				char buffer[521];
+				glGetProgramInfoLog(_program, 512, NULL, buffer);
+				std::cout << buffer << std::endl;
+			}
+		}
+
+		glValidateProgram(_program);
+		{
+			GLint status;
+			glGetProgramiv(_program, GL_VALIDATE_STATUS, &status);
+			if (status != GL_TRUE) {
+				char buffer[521];
+				glGetProgramInfoLog(_program, 512, NULL, buffer);
+				std::cout << buffer << std::endl;
+			}
+		}
+
+		glUseProgram(_program);
+		//*/
+		glBindVertexArray(0);
 	}
 
 	void GraphicsComponent::drawEverything(float delta) {
 
-		///*
-
-		if (!_setUp) { init(); }
-
-		glBindBuffer(GL_ARRAY_BUFFER, _vertexBufferObject);
-		glUseProgram(_program);
-		
-		glVertexAttribPointer(glGetAttribLocation(_program, "position"), 3, GL_FLOAT, GL_FALSE, 0, 0);
-		glEnableVertexAttribArray(glGetAttribLocation(_program, "position"));
+		if (!_setUp) { init(); }		
 		
 		glBindVertexArray(_vertexArrayObject);
 
-		GLenum error = glGetError();
-		if (error != GL_NO_ERROR) {
-			error += 0;
-		}
-
 		for (size_t i = 0; i < _componentList.size(); i++) {
+			_componentList[i]->_material->bind();
 			glDrawArrays(GL_TRIANGLES, 0, (GLsizei) _vertices.size());
 		}
 
-		glBindBuffer(GL_ARRAY_BUFFER, 0);
-
-		//*/
-		///*
-
-		glBegin(GL_TRIANGLES);
-		{
-			//glColor3f(1.0, 0.0, 0.0);
-			glVertex2f(0 - 0.25, .5 - 0.25);
-			//glColor3f(0.0, 1.0, 0.0);
-			glVertex2f(-.5 - 0.25, -.5 - 0.25);
-			//glColor3f(0.0, 0.0, 1.0);
-			glVertex2f(.5 - 0.25, -.5 - 0.25);
-		}
-		glEnd();
-		//*/
+		glBindVertexArray(0);
 	}
 
 	void GraphicsComponent::destroy() {
-
-		glBindBuffer(GL_ARRAY_BUFFER, 0);
+		glBindVertexArray(_vertexArrayObject);
 		glDeleteBuffers(1, &_vertexBufferObject);
+		glBindVertexArray(0);
+		glDeleteVertexArrays(1, &_vertexArrayObject);
 	}
 }
