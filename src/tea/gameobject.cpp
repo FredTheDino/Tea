@@ -1,7 +1,7 @@
 #include "gameobject.h"
 
 namespace Tea {
-	
+
 	GameObject::GameObject() {}
 
 	GameObject::~GameObject() {}
@@ -47,7 +47,7 @@ namespace Tea {
 	}
 
 	template <typename T>
-	void GameObject::disableComponent() {
+	bool GameObject::disableComponent() {
 		for (size_t i = 0; i < _components.size(); i++) {
 			T* object = dynamic_cast<T*>(_components[i]);
 
@@ -61,7 +61,7 @@ namespace Tea {
 	}
 
 	template <typename T>
-	void GameObject::enableComponent(Component* component) {
+	bool GameObject::enableComponent(Component* component) {
 		for (size_t i = 0; i < _components.size(); i++) {
 			T* object = dynamic_cast<T*>(_components[i]);
 
@@ -75,7 +75,7 @@ namespace Tea {
 	}
 
 	template <typename T>
-	void GameObject::toggleComponent(Component* component) {
+	bool GameObject::toggleComponent(Component* component) {
 		for (size_t i = 0; i < _components.size(); i++) {
 			T* object = dynamic_cast<T*>(_components[i]);
 

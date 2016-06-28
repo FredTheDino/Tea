@@ -28,13 +28,13 @@ namespace Tea {
 		void enableAllComponents();
 
 		template <typename T>
-		void disableComponent();
+		bool disableComponent();
 
 		template <typename T>
-		void enableComponent(Component* component);
+		bool enableComponent(Component* component);
 
 		template <typename T>
-		void toggleComponent(Component* component);
+		bool toggleComponent(Component* component);
 
 	private:
 		std::vector<Component*> _components;

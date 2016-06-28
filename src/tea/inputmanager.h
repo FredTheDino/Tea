@@ -6,7 +6,7 @@
 #include <vector>
 #include <iostream>
 
-#include "glm\glm.hpp"
+#include "glm/glm.hpp"
 #include "include.h"
 #include "input.h"
 //Included bellow

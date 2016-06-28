@@ -3,6 +3,7 @@ FILE(GLOB SOURCE_FILES "*.cpp" "*.h")
 ADD_LIBRARY(tea ${SOURCE_FILES})
 
 INCLUDE_DIRECTORIES(tea "/include")
+INCLUDE_DIRECTORIES(tea "/glm" "/glm/gtc" "/glm/gtc" "/glm/detail")
 
 #INCLUDE(FindPkgConfig)
 #PKG_SEARCH_MODULE(SDL2 REQUIRED sdl2)
