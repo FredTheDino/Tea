@@ -4,14 +4,21 @@
 
 namespace Tea {
 
+	GLuint Shader::_currentShader = 0;
+
 	static void checkError(GLuint& target, GLenum check, bool isProgram = false) {
 
-		GLint status;
+		GLenum err = GL_NO_ERROR;
+		while ((err = glGetError()) != GL_NO_ERROR) {
+			std::cout << "GL error: " << err << std::endl;
+		}
+
+		GLint status = 1;
 		if (isProgram)
-			glGetShaderiv(target, check, &status);
+			glGetProgramiv(target, check, &status);
 
 		else
-			glGetProgramiv(target, check, &status);
+			glGetShaderiv(target, check, &status);
 
 		if (status != GL_TRUE) {
 
@@ -22,7 +29,8 @@ namespace Tea {
 			else
 				glGetShaderInfoLog(target, 512, NULL, buffer);
 
-			std::cout << "A shader error occured: " << buffer << std::endl;
+			if (buffer)
+				std::cout << "A shader error occured: " << buffer << std::endl;
 		}
 	}
 
@@ -49,17 +57,25 @@ namespace Tea {
 				makeShader(path + ".vs", GL_VERTEX_SHADER)
 				);
 		}
+		
 		if (shaderTypes & ShaderTypes::FRAGMENT_SHADER) {
 			_shaders.push_back(
 				makeShader(path + ".fs", GL_FRAGMENT_SHADER)
 				);
 		}
+		
 		if (shaderTypes & ShaderTypes::TESSELATION_SHADER) {
 			_shaders.push_back(
-				makeShader(path + ".ves", GL_TESS_EVALUATION_SHADER)
+				makeShader(path + ".tes", GL_TESS_EVALUATION_SHADER)
 				);
 			_shaders.push_back(
-				makeShader(path + ".vcs", GL_TESS_CONTROL_SHADER)
+				makeShader(path + ".tcs", GL_TESS_CONTROL_SHADER)
+				);
+		}
+
+		if (shaderTypes & ShaderTypes::GEOMETRY_SHADER) {
+			_shaders.push_back(
+				makeShader(path + ".gs", GL_GEOMETRY_SHADER)
 				);
 		}
 
@@ -83,7 +99,12 @@ namespace Tea {
 		glDeleteProgram(_program);
 	}
 
+	GLuint Shader::getCurrentProgram() {
+		return _currentShader;
+	}
+
 	void Shader::bind() {
+		_currentShader = _program;
 		glUseProgram(_program);
 	}
 }

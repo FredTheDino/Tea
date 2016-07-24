@@ -1,4 +1,4 @@
-FILE(GLOB SOURCE_FILES "*.cpp" "*.h")
+FILE(GLOB SOURCE_FILES "*.cpp" "*.h" "*.c")
 
 ADD_LIBRARY(tea ${SOURCE_FILES})
 

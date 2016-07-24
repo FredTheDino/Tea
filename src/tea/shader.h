@@ -20,9 +20,13 @@ namespace Tea {
 		Shader(const std::string& path, unsigned int shaderTypes = 3);
 		~Shader();
 
+		static GLuint getCurrentProgram();
+
 		void bind();
 
 	private:
+
+		static GLuint _currentShader;
 
 		std::vector<GLuint> _shaders;
 		GLuint _program;

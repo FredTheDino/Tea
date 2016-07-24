@@ -6,6 +6,19 @@ namespace Tea {
 
 	GameObject::~GameObject() {}
 
+	template<typename T>
+	bool GameObject::getComponent(T** component) {
+		for (size_t i = 0; i < _components.size(); i++) {
+			T* object = dynamic_cast<T*>(_components[i]);
+
+			if (object != NULL) {
+				*component = object;
+				return true;
+			}
+		}
+		return false;
+	}
+
 	template <typename T>
 	bool GameObject::addComponent(T* component) {
 		for (size_t i = 0; i < _components.size(); i++) {

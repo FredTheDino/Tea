@@ -1,6 +1,9 @@
 #include "loader.h"
 
+//#include "stb_image.h"
+
 namespace Tea {
+
 
 	std::string Loader::fsPath = "../res/";
 	bool Loader::looping = false;
@@ -11,7 +14,7 @@ namespace Tea {
 		std::string line;
 		
 		if (!file.is_open()) {
-			std::cout << "HERLM," << std::endl;
+			std::cout << "Loader error: File does not exists " << fsPath + path << std::endl;
 		}
 
 		std::string output = "";
@@ -20,6 +23,18 @@ namespace Tea {
 			output += '\n';
 		}
 		return output;
+	}
+
+	unsigned char * Loader::loadImage(const std::string& path, int* width, int* height, int* numComponents, int numComponentsHint) {
+		if (!works) {
+			std::fstream f = openFile(path);
+			f.close();
+		}
+		return stbi_load((fsPath + path).c_str(), width, height, numComponents, numComponentsHint);
+	}
+
+	void Loader::freeImage(unsigned char* data) {
+		stbi_image_free(data);
 	}
 
 	std::fstream Loader::openFile(const std::string & path) {

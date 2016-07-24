@@ -1,15 +1,9 @@
 #pragma once
 
-#ifdef _WIN64
+#if defined(_WIN64) || defined(_WIN32)
 
 #include "include/SDL.h"
 #include "include/glew.h"
-#include <GL/gl.h>
-
-#elif _WIN32
-
-#include "include/glew.h"
-#include "include/SDL.h"
 #include <GL/gl.h>
 
 #else

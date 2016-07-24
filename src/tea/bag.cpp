@@ -2,7 +2,7 @@
 
 namespace Tea {
 
-	std::vector<void(*)(float)> Bag::_functions;
+	std::vector<void(*)(double)> Bag::_functions;
 	bool Bag::_running = true;
 	Display* Bag::_display = NULL;
 
@@ -14,6 +14,7 @@ namespace Tea {
 		GraphicsComponent::init();
 
 		registerUpdateFunction(GraphicsComponent::drawEverything);
+		registerUpdateFunction(AnimationManager::updateAll);
 	}
 
 	Bag::~Bag() {
@@ -25,15 +26,17 @@ namespace Tea {
 
 	void Bag::init() {
 		_display = new Display();
+		Time::setMaxFrameRate();
 	}
 
 	void Bag::run() {
 		while (_running) {
 			_display->update();
+			Time::update();
 			InputManager::update();
 
 			for (size_t i = _functions.size(); 0 < i; i--)
-				_functions[i - 1](0.0f);
+				_functions[i - 1](Time::getDelta());
 
 			if (InputManager::hasInputState("quit", InputState::KEY_RELEASED))
 				stop();
@@ -48,7 +51,7 @@ namespace Tea {
 		SDL_Quit();
 	}
 
-	void Bag::registerUpdateFunction(void(*function)(float))  {
+	void Bag::registerUpdateFunction(void(*function)(double))  {
 		_functions;
 		_functions.push_back(function);
 	}

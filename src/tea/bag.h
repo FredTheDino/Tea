@@ -12,6 +12,9 @@
 #include "inputmanager.h"
 #include "graphicscomponent.h"
 #include "loader.h"
+#include "time.h"
+#include "animation.h"
+#include "animationmanager.h"
 
 namespace Tea {
 	class Bag {
@@ -28,11 +31,11 @@ namespace Tea {
 
 		static void cleanUp();
 
-		static void registerUpdateFunction(void(*function)(float));
+		static void registerUpdateFunction(void(*function)(double));
 
 	private:
 
-		static std::vector<void(*)(float)> _functions;
+		static std::vector<void(*)(double)> _functions;
 
 		static bool _running;
 		static Display* _display;

@@ -14,12 +14,17 @@ namespace Tea {
 
 		static void init();
 
-		static void drawEverything(float delta);
+		static void drawEverything(double delta);
+
+		void setSubSprite(unsigned int subSprite) { _subSprite = subSprite; }
+		unsigned int getSubSprite() { return _subSprite; }
 
 		static void destroy();
 
 	private:
 		Material* _material;
+
+		unsigned int _subSprite;
 
 		static bool _setUp;
 		static GLuint _vertexBufferObject;

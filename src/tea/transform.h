@@ -15,9 +15,9 @@ namespace Tea {
 
 		glm::mat4 generateTransformationMatrix() {
 			glm::mat4 transformation;
-			glm::translate(transformation, glm::vec3(_position, 0));
-			glm::rotate(transformation, _rotation, glm::vec3(1.0f, 0, 0));
-			glm::scale(transformation, glm::vec3(_scale.x, _scale.y, 1));
+			transformation = glm::translate(transformation, glm::vec3(_position, 0));
+			transformation = glm::rotate(transformation, _rotation, glm::vec3(0, 0, 1.0f));
+			transformation = glm::scale(transformation, glm::vec3(_scale.x, _scale.y, 1));
 			return transformation;
 		}
 

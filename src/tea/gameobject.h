@@ -18,6 +18,9 @@ namespace Tea {
 		Transform transform;
 
 		template <typename T>
+		bool getComponent(T** component);
+
+		template <typename T>
 		bool addComponent(T* component);
 
 		template <typename T>
