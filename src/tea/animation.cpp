@@ -2,6 +2,7 @@
 #include "animationmanager.h"
 
 #include <iostream>
+#include <stdio.h>
 
 namespace Tea {
 
@@ -36,7 +37,9 @@ namespace Tea {
 
 		lerp = t / _timePerFrame;
 
-		std::cout << lerp << std::endl;
+		//cout.precision(17);
+
+		//std::cout << std::fixed << lerp << std::endl;
 
 		if (_timePerFrame < t) {
 			t -= _timePerFrame;
@@ -55,18 +58,15 @@ namespace Tea {
 						_running = false;
 					}
 				}
-
 				(*_target) = _frames[_frame];
 
 				break;
 			case Tea::LINEAR:
 
-
 				if ((_frame != _frames.size() - 1) || _repeat) {
 					if (_repeat) {
 						_frame %= _frames.size();
 					}
-
 					(*_target) = _frames[_frame] + (_frames[(_frame + 1) % _frames.size()] - _frames[_frame]) * lerp;
 
 				} else {
@@ -81,7 +81,7 @@ namespace Tea {
 					if (_repeat) {
 						_frame %= _frames.size();
 					}
-					(*_target) = _frames[_frame] + (_frames[(_frame + 1) % _frames.size()] - _frames[_frame]) * (lerp * lerp * (3 - 2 * lerp));
+					(*_target) = _frames[_frame] + (_frames[(_frame + 1) % _frames.size()] - _frames[_frame]) * -(lerp - 2) * lerp * lerp; //(lerp * lerp * (3 - 2 * lerp));
 				} else {
 					(*_target) = _frames[_frames.size() - 1];
 					_running = false;
