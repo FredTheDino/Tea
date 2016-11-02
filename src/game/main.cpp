@@ -11,18 +11,18 @@ static double a = 0;
 static int frame = 0;
 
 void update(double delta) {
-	static unsigned int lastFPS = 0;
-	unsigned int newFPS = Tea::Time::getFPS();
-	if (lastFPS != newFPS) {
-		//std::cout << "FPS: " << newFPS << std::endl;
-		lastFPS = newFPS;
-	}
-	printf("A: %f\n", a);
-	obj.transform._position.x = a;
-	Tea::GraphicsComponent* gc;
-	obj.getComponent<Tea::GraphicsComponent>(&gc);
-	gc->setSubSprite(frame);
-	//std::cout << "A: " << a << std::endl;
+  static unsigned int lastFPS = 0;
+  unsigned int newFPS = Tea::Time::getFPS();
+  if (lastFPS != newFPS) {
+    //std::cout << "FPS: " << newFPS << std::endl;
+    lastFPS = newFPS;
+  }
+  //printf("A: %f\n", a);
+  obj.transform._position.x = a;
+  Tea::GraphicsComponent* gc;
+  obj.getComponent<Tea::GraphicsComponent>(&gc);
+  gc->setSubSprite(frame);
+  //std::cout << frame << std::endl;
 }
 
 
@@ -40,7 +40,7 @@ int main(int argc, const char* argv[]) {
 	Tea::Animation<int> color(&frame, {0, 1, 2, 3}, 0.5, Tea::DIGITAL, true);
 
 	Tea::Shader sh("shader");
-	Tea::Texture tex("texture.png", 2, 2);
+	Tea::Texture tex("texture.jpg", 2, 2);
 	Tea::Material mat(&sh, &tex);
 	
 	GLenum err = GL_NO_ERROR;

@@ -1,33 +1,40 @@
-#version 330
+#version 300 es
 
-in vec3 position;
+in highp vec3 position;
 
 
-out vec2 texCoord;
+out highp vec2 texCoord;
+highp vec4 out_pos;
 
-uniform vec2 spriteDimensions;
-uniform int subSprite;
-uniform mat4 translationMatrix;
-uniform sampler2D texture;
+
+uniform highp vec2 spriteDimensions;
+uniform highp int subSprite;
+uniform highp mat4 translationMatrix;
+uniform highp sampler2D texture;
 
 void main()
 {
-	gl_Position = translationMatrix * vec4(position * 1, 1.0);
+  out_pos = translationMatrix * vec4(position.x, position.y, position.z, 1.0);
+  gl_Position = out_pos;
+  
+  texCoord = vec2(position.x + 0.5, position.y + 0.5);
 
-	texCoord = vec2(position.x + 0.5, position.y + 0.5);
+  //Flip the texture vertically
+  texCoord.y = 1.0 - texCoord.y;
 
-	//Flip the texture vertically
-	texCoord.y = 1 - texCoord.y;
+  texCoord.x *= spriteDimensions.x;
+  texCoord.y *= spriteDimensions.y;
 
-	texCoord.x *= spriteDimensions.x;
-	texCoord.y *= spriteDimensions.y;
+  float numSprites = 1.0 / (spriteDimensions.x);
+  float x = mod(float(subSprite), numSprites);
+  float y = (float(subSprite) - float(x)) * float(spriteDimensions.x);
+  //float y = (float(subSprite) - float(x)) / (1.0 / float(spriteDimensions.x));
+	
+  texCoord.x += spriteDimensions.x * x;
+  texCoord.y += spriteDimensions.y * y;
 
-	float numSprites = (1.0 / spriteDimensions.x);
-	float x = mod(subSprite, numSprites);
-	float y = ((subSprite - x) / (1 / spriteDimensions.x));
-
-	texCoord.x += spriteDimensions.x * x;
-	texCoord.y += spriteDimensions.y * y;
-
-	//texCoord.x = 1 - texCoord.x;
+  //texCoord.x = out_pos.x;
+  //texCoord.y = out_pos.y;
+	
+  //texCoord.x = 1 - texCoord.x;
 }

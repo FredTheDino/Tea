@@ -4,7 +4,7 @@
 #include <fstream>
 #include <iostream>
 
-#include "stb_image.h"
+//#include "stb_image.h"
 
 namespace Tea {
 

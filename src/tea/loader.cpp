@@ -1,6 +1,7 @@
 #include "loader.h"
 
-//#include "stb_image.h"
+#define STB_IMAGE_IMPLEMENTATION
+#include "stb_image.h"
 
 namespace Tea {
 
@@ -34,7 +35,7 @@ namespace Tea {
 	}
 
 	void Loader::freeImage(unsigned char* data) {
-		stbi_image_free(data);
+	  stbi_image_free(data);
 	}
 
 	std::fstream Loader::openFile(const std::string & path) {
@@ -43,7 +44,7 @@ namespace Tea {
 		if (file.fail()) {
 			std::cout << "Error loading file: " << (fsPath + path) << std::endl;
 			
-			//If you can't find the first file, look in the directories over this one til we find it. 
+			//If you can't find the first file, look in the directories over this one until we find it. 
 			//(If you build this in the build directory, it should just allways work.)
 			if (!looping && !works) {
 				looping = true;
