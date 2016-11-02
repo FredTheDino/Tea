@@ -1,0 +1,20 @@
+Sound
+	OpenAL:
+		Spatial and global
+		Volume 
+		Fading < (Animation)
+		
+Collision
+	Broadphase
+		Boxed in areas? < No idea
+		Radius check < Simple, not very good
+		Sorted list along each axis < Really good, complex, and SUPER COOL < Challenge
+	Narrowphase
+		AABB? < Super simple < Mindless typing? < More close to my challenge level?
+		SAT? < Complex, more time consuming < Learning oppertunity
+
+Particles!
+	Geometry shader?
+		Is it supported in GLSL 3.0ES?
+	Sprite batching
+	
