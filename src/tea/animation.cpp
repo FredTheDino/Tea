@@ -24,7 +24,9 @@ namespace Tea {
 	}
 
 	template<class T>
-	Animation<T>::~Animation() {}
+	Animation<T>::~Animation() {
+		AnimationManager::removeAnimation(this);
+	}
 
 	template<class T>
 	void Animation<T>::update(double delta) {

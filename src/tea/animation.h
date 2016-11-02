@@ -6,6 +6,19 @@
 
 namespace Tea {
 
+	/*
+		The Animation" class can animate a single number based on 
+		keyframes. This can be used to move a platform or change 
+		the color of a light over time.
+
+		There are 3 animation types: DIGITAL, LINEAR and EASE.
+		These controle the fading between the keyframes of the 
+		animation. DIGITAL simply jumps between the keyframes 
+		when it is reached. LINEAR linearly interpelates between
+		the current and the next keyframe. EASE fades in and out
+		according to a X^3 curve. 
+	*/
+
 	// Enum for the different animation types	
 	enum AnimationType {
 		DIGITAL,

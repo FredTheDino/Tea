@@ -38,6 +38,8 @@ int main(int argc, const char* argv[]) {
 	
 	Tea::Animation<double> anim(&a, {0.1, 0.2, 0.3, 0.4, -0.5}, 0.5, Tea::EASE, true);
 	Tea::Animation<int> color(&frame, {0, 1, 2, 3}, 0.5, Tea::DIGITAL, true);
+	Tea::Animation<int>* colordelete = new Tea::Animation<int>(&frame, {0, 1, 2, 3}, 0.1, Tea::DIGITAL, true);
+	delete colordelete;
 
 	Tea::Shader sh("shader");
 	Tea::Texture tex("texture.jpg", 2, 2);
