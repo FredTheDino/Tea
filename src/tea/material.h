@@ -3,7 +3,16 @@
 #include "texture.h"
 
 namespace Tea {
-	class Material {
+
+  /*
+    "Material" is a collection of a "Shader" and a
+    "Texture" which in turn can be bound to a "GraphicsComponent"
+    and be renderd to the screen.
+
+    A "Shader" and "Texture" can be used in multiple "Materials".
+  */
+
+  class Material {
 	public:
 		Material(Shader* shader, Texture* texture);
 		~Material();

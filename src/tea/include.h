@@ -1,5 +1,10 @@
 #pragma once
 
+/*
+  This handles includes, cause I saw this as a
+  good solution at the time.
+*/
+
 #if defined(_WIN64) || defined(_WIN32)
 
 #include "include/SDL.h"

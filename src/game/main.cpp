@@ -29,7 +29,7 @@ void update(double delta) {
 int main(int argc, const char* argv[]) {
 
 	Tea::Bag bag;
-
+        
 	bag.registerUpdateFunction(update);
 
 	Tea::Time::setMaxFrameRate(0);

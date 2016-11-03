@@ -4,10 +4,17 @@
 
 namespace Tea {
 
-	struct Vertex {
+  /*
+    "Vertex" is just a simple abstract datatype for OpenGL
+    buffers to transfer data to OpenGL.
+  */
+  
+  struct Vertex {
 
-		Vertex(float x, float y, float z): position(x, y, z) {}
+    // Constructor for the vertex, simply assignes the position data.
+   Vertex(float x, float y, float z): position(x, y, z) {}
 
-		glm::vec3 position;
-	};
+    // The position data of the vertex
+    glm::vec3 position;
+  };
 }

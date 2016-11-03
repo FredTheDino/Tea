@@ -17,7 +17,7 @@ namespace Tea {
 		if (!file.is_open()) {
 			std::cout << "Loader error: File does not exists " << fsPath + path << std::endl;
 		}
-
+	
 		std::string output = "";
 		while (std::getline(file, line)) {
 			output += line;
